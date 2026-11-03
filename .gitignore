@@ -13,5 +13,6 @@ coverage/
 *.sqlite3
 ml/artifacts/*.joblib
 !ml/artifacts/.gitkeep
+!ml/artifacts/*.json
 .DS_Store
 .vscode/
