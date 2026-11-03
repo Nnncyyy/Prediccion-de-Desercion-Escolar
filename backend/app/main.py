@@ -94,3 +94,13 @@ def dashboard(db:Session=Depends(get_db),_user:User=Depends(current_user)):
 @app.post('/api/ml/predict')
 def ml_predict(body:MLPredictInput,_user:User=Depends(current_user)):
     return predict(body.features)
+
+@app.get('/api/ml/model')
+def ml_model(_user:User=Depends(current_user)):
+    from app.services.ml import get_model_info
+    return get_model_info()
+
+@app.get('/api/ml/schema')
+def ml_schema(_user:User=Depends(current_user)):
+    from app.services.ml import get_feature_schema
+    return get_feature_schema()
