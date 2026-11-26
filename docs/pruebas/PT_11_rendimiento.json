@@ -1,0 +1,59 @@
+{
+  "id": "PT_11",
+  "fecha_utc": "2026-11-25T04:46:20.695960+00:00",
+  "entorno": {
+    "python": "3.13.5",
+    "sistema": "Linux",
+    "arquitectura": "x86_64",
+    "sqlite": "3.46.1",
+    "modelo": "1.0.0-pruebas"
+  },
+  "carga": {
+    "alumnos": 200,
+    "inscripciones": 1000,
+    "hilos": 10,
+    "peticiones_por_ruta": 100,
+    "calentamiento_por_ruta": 1,
+    "limit_students": 200
+  },
+  "p95_limite_s_exclusivo": 1.0,
+  "metodo_p95": "rango más próximo (ceil(0.95 × n))",
+  "resultados": {
+    "GET /api/students": {
+      "peticiones": 100,
+      "respuestas_por_codigo": {
+        "200": 100
+      },
+      "p50_s": 0.2220586719995481,
+      "p95_s": 0.27704423400064115,
+      "max_s": 0.2959685839996382,
+      "peticiones_por_s": 44.098615186004295,
+      "duracion_lote_s": 2.267644904000008,
+      "codigo_calentamiento": 200
+    },
+    "GET /api/dashboard": {
+      "peticiones": 100,
+      "respuestas_por_codigo": {
+        "200": 100
+      },
+      "p50_s": 0.382771369999773,
+      "p95_s": 0.5395869599997241,
+      "max_s": 0.6348800039995695,
+      "peticiones_por_s": 25.309433071788582,
+      "duracion_lote_s": 3.951096009000139,
+      "codigo_calentamiento": 200
+    },
+    "POST /api/ml/predict": {
+      "peticiones": 100,
+      "respuestas_por_codigo": {
+        "200": 100
+      },
+      "p50_s": 0.23487953299991204,
+      "p95_s": 0.49945358100012527,
+      "max_s": 1.144216595999751,
+      "peticiones_por_s": 35.66293964031125,
+      "duracion_lote_s": 2.8040313279998372,
+      "codigo_calentamiento": 200
+    }
+  }
+}

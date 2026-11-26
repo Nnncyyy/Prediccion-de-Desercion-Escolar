@@ -1,75 +1,44 @@
 # SIPDE — Sistema Inteligente de Predicción de Deserción Escolar
 
-**Proyecto académico | Ingeniería de Software para Sistemas Inteligentes | Equipo de 4 integrantes**
+Proyecto académico de Ingeniería de Software para Sistemas Inteligentes. Reúne una aplicación React y TypeScript, una API FastAPI y SQLAlchemy, SQLite para desarrollo y PostgreSQL opcional.
 
-Monorepositorio con frontend React + TypeScript + Vite, API FastAPI + SQLAlchemy, BD SQLite de desarrollo (PostgreSQL opcional), evaluación de alertas académicas y módulo de aprendizaje automático.
+## Inicio rápido (PT_13)
 
-> Estado: **base funcional de desarrollo**, no sistema institucional listo para producción. El motor de alertas académicas se basa en reglas; el estimador ML funciona solo después de entrenarlo. No se deben confundir las alertas de reglas con una probabilidad estadística de deserción.
-
-## Inicio rápido (dos terminales)
-
-Requisitos: Python 3.11+ y Node.js 20+.
-
-**Terminal A — Backend**
+Con Python 3.11+, Node.js 20+ y Git, desde la raíz en Linux o macOS:
 
 ```bash
+python3 -m venv backend/.venv
+source backend/.venv/bin/activate
+python -m pip install -r backend/scripts/requirements-instalacion.txt
+python backend/scripts/generar_env.py
+python ml/training/train.py
 cd backend
-python -m venv .venv
-# Windows PowerShell: .venv\Scripts\Activate.ps1
-# macOS/Linux: source .venv/bin/activate
-pip install -r requirements.txt
-cp ../.env.example .env   # Windows PowerShell: Copy-Item ..\.env.example .env
-# Edita JWT_SECRET, ADMIN_EMAIL y ADMIN_PASSWORD en backend/.env
-uvicorn app.main:app --reload
+python -m alembic upgrade head
+python -m app.seed
+python -m uvicorn app.main:app
 ```
 
-API: http://localhost:8000/docs — Backend crea tablas y cuenta administradora en el primer arranque. Se requiere configurar contraseña y secreto antes de iniciarlo.
+En otra terminal, entra en `frontend/`, ejecuta `npm install`, copia `.env.example` a `.env` y ejecuta `npm run dev`. Usa las credenciales generadas para iniciar sesión. [Aplicación](http://localhost:5173), [Swagger UI](http://localhost:8000/docs)
 
-**Terminal B — Frontend**
-
-```bash
-cd frontend
-npm install
-cp .env.example .env    # Windows PowerShell: Copy-Item .env.example .env
-npm run dev
-```
-
-Abre http://localhost:5173; inicia sesión con `ADMIN_EMAIL` y `ADMIN_PASSWORD` configurados en el backend.
+El manual incluye PowerShell, configuración de PostgreSQL, Docker opcional y pruebas. [Manual de instalación](docs/manual-instalacion/MANUAL_INSTALACION.md)
 
 ## Qué funciona hoy
-- Inicio de sesión y autorización mediante JWT, rol administrador inicial (API protegida).
-- Alta, listado y detalle de estudiantes; registro de materias, periodos, inscripciones y calificaciones.
-- Dashboard con conteos, desempeño básico y alertas **orientativas**, no validadas clínicamente ni institucionalmente.
-- Predicción con modelo **solo si** se genera el archivo entrenado y se aporta el conjunto de variables completo mediante API.
-- Esquema inicial de BD y pruebas automatizadas de salud y reglas.
 
-## Entrenamiento IA (opcional, paso separado)
+- Salud de la API, inicio de sesión con JWT, perfil y cambio de contraseña. El administrador gestiona cuentas de administración, tutoría y operación.
+- Altas, búsquedas y actualización de expedientes y datos laborales, bajas lógicas, reactivación y asignación a tutores.
+- Catálogos de carreras, periodos y materias, gestión de inscripciones y calificaciones, y notas de seguimiento de tutoría.
+- Alertas académicas RA_01 y dashboard con indicadores académicos y de ML según el rol y el alcance del usuario.
+- Consulta del esquema, inferencia con el modelo entrenado e historial de predicciones desde la API. La inferencia usa variables del dataset histórico y RA_01 usa las calificaciones y los datos laborales del expediente.
+- Bitácora de operaciones para administradores.
+- Importación CSV de alumnos e inscripciones, con validación previa y plantillas. Reportes de indicadores y exportación CSV de alumnos y predicciones.
 
-```bash
-cd backend
-python ../ml/training/train.py --csv ../ml/data/dataset.csv --out ../ml/artifacts/dropout_model.joblib
-```
+[Contrato de la API](docs/contrato-api.md), [Entrenamiento y procedencia del dataset](ml/README.md)
 
-Dataset de partida: 4,424 registros, 35 columnas y clases `Dropout`, `Enrolled`, `Graduate`. **No** incluye empleo, horas de trabajo ni calificación por materia individual; estos campos adicionales se almacenan en la BD y alimentan alertas, **no** el modelo ML hasta disponer de datos históricos que los contengan. El endpoint `POST /api/ml/predict` exige un diccionario `features` con todas las variables del entrenamiento. La UI no ofrece aún formulario completo para esa inferencia.
+## Estructura y colaboración
 
-**Advertencia:** el dataset y `EXPOESCOM.py` se incluyen como referencias académicas suministradas por el equipo; verificar derechos y permisos antes de hacer público el repositorio. La base de datos local, claves y artefactos ML están excluidos de Git.
+- `backend/app/` contiene las rutas, entidades, reglas y servicios. `backend/alembic/` contiene las migraciones.
+- `frontend/` contiene las vistas y el cliente de la API.
+- `ml/` contiene el conjunto de datos académico, el entrenamiento y las métricas.
+- `docs/` contiene requisitos, arquitectura y pruebas.
 
-## Colaboración
-1. Rama principal `main` protegida; ramas `feature/INT_02-estudiantes`, etc.
-2. Abrir issue con identificador `RF_XX` / `CU_XX` / `PT_XX`; trabajar en rama, hacer Pull Request, obtener revisión y ejecutar pruebas.
-3. No subir `.env`, datos reales de alumnos ni contraseñas.
-4. Reunión breve dos veces por semana; mantener `docs/plan-semanal.md` y `docs/matriz-trazabilidad.md` al día.
-
-## Estructura
-- `frontend/`: vistas, componentes, cliente API y estilos.
-- `backend/app/`: rutas, entidades, acceso a datos, reglas, seguridad y servicio de predicción.
-- `ml/`: conjunto de datos de muestra, entrenamiento, métricas y modelos locales.
-- `docs/`: requisitos, arquitectura, casos de uso, planes de trabajo y pruebas.
-- `tests/`: reservado para pruebas end-to-end.
-- `.github/`: CI y plantilla Pull Request.
-
-## Limitaciones importantes
-- Almacenamiento SQLite es para desarrollo; configurar `DATABASE_URL` de PostgreSQL en producción y añadir migraciones Alembic.
-- Los umbrales de alerta son configuraciones iniciales que deben validarse con responsables académicos.
-- Endpoint de entrenamiento NO accesible desde la web: entrenar fuera de la API, con evaluación independiente.
-- Faltan editar/desactivar alumnos, perfiles adicionales, seguimiento por tutor, reportes PDF y despliegue seguro; están planificados en `docs/plan-semanal.md`.
+Relaciona cada contribución con su identificador `RF_XX`, `CU_XX` o `PT_XX`. Ejecuta las pruebas antes de enviar cambios y conserva los secretos y los expedientes reales fuera del repositorio.

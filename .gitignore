@@ -10,6 +10,7 @@ node_modules/
 dist/
 coverage/
 *.db
+*.sqlite
 *.sqlite3
 ml/artifacts/*.joblib
 !ml/artifacts/.gitkeep

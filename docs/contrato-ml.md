@@ -2,7 +2,9 @@
 
 Responsable: INT_03. Requisitos: RF_08, RF_09, RF_10, RF_11, RF_15, RNF_06; reglas RN_01, RN_03, RN_04 y RN_05. Evidencia automatizada: PT_08, PT_09, PT_10, `test_ml_api.py` (PT_07 parcial) y `test_risk.py` (RA_01).
 
-## RF_09 · Endpoints y autorización vigente
+> Esta captura documenta la entrega de INT_03 previa a la integración. Para los roles, la asociación opcional de alumno, el historial BD_07 y los errores de autenticación vigentes, consulta el [contrato HTTP de INT_02](contrato-api.md). Los ejemplos de variables y el contrato de salida del servicio de inferencia siguen aplicando.
+
+## RF_09 · Endpoints y autorización en la entrega INT_03
 
 Todas las rutas usan `Authorization: Bearer <JWT>` emitido por `POST /api/auth/login`, con la misma dependencia `current_user` del predictor existente. Actualmente se exige usuario activo; **no existe filtrado por rol** en estas rutas. Se probó el rol `admin` creado por el lifespan. La restricción por rol de RN_04 queda pendiente de INT_02, incluida la matriz de roles autorizados; INT_04 no debe asumir que ocultar controles equivale a autorización de servidor.
 

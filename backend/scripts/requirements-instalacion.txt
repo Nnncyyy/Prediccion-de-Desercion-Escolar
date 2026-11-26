@@ -1,0 +1,4 @@
+# RT_01 / RNF_03 · Dependencias del backend, migraciones e importación por formulario.
+-r ../requirements.txt
+alembic>=1.20,<2
+python-multipart>=0.0.20,<1

@@ -1,3 +1,4 @@
+# RT_01 / RT_03 · API SIPDE con PostgreSQL.
 services:
   postgres:
     image: postgres:16-alpine
@@ -5,10 +6,29 @@ services:
     environment:
       POSTGRES_DB: sipde
       POSTGRES_USER: sipde
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Definir POSTGRES_PASSWORD en .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Definir POSTGRES_PASSWORD}
     ports:
       - "127.0.0.1:5432:5432"
     volumes:
       - sipde_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sipde -d sipde"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+  backend:
+    build:
+      context: ./backend
+      additional_contexts:
+        ml: ./ml
+    env_file: ./backend/.env
+    environment:
+      DATABASE_URL: postgresql+psycopg://sipde:${POSTGRES_PASSWORD:?Definir POSTGRES_PASSWORD}@postgres:5432/sipde
+      AUTO_CREATE_TABLES: "false"
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
 volumes:
   sipde_postgres:

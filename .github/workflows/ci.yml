@@ -9,8 +9,15 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: '3.11'}
-      - run: pip install -r backend/requirements.txt
-      - run: cd backend && pytest -q
+      - run: python -m pip install -r backend/scripts/requirements-instalacion.txt
+      - name: Aplicar migraciones RNF_03 en SQLite temporal
+        working-directory: backend
+        run: |
+          directorio="$(mktemp -d)"
+          trap 'rm -rf "$directorio"' EXIT
+          DATABASE_URL="sqlite:///$directorio/sipde.sqlite" python -m alembic upgrade head
+      # PT_08–PT_10 entrenan un modelo temporal en la fixture de sesión.
+      - run: cd backend && python -m pytest -q
   frontend:
     runs-on: ubuntu-latest
     steps:

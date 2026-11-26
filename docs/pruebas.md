@@ -1,52 +1,56 @@
-# PT — Plan de pruebas inicial
+# PT · Plan de pruebas de SIPDE
 
-- PT_01 Inicio de sesión: credenciales válidas → JWT; inválidas → HTTP 401.
-- PT_02 Alumnos: alta válida → HTTP 201; matrícula repetida → HTTP 409.
-- PT_03 Calificaciones: registrar nota 0..10; fuera de rango → HTTP 422.
-- PT_04 IA (entrada inicial sustituida por PT_08/PT_09/PT_10 abajo): controles oficiales de esquema, métricas, sin fuga y reproducibilidad; responsable INT_03.
-- PT_05 Alertas / RA_01 (RF_10): evidencia vigente en `backend/tests/test_risk.py`; sin calificaciones → sin_datos; 2 reprobadas y trabajo 30 h → alta; no etiquetar como probabilidad ML. Responsable INT_03.
-- PT_06 Dashboard: conteos según BD.
-- PT_07 Seguridad: endpoint privado sin token → 401/403.
-- PT_08 Integración: crear estudiante + materia + inscripción y consultar alerta.
-- PT_09 Manual: ejecutar desde clon limpio con .env configurado.
+El inventario usa las etapas del capítulo 7 del informe. Los resultados del backend se registran por caso de pytest, incluidas las parametrizaciones.
 
-Cada ejecución debe incluir ID, fecha, versión, responsable, entrada, salida esperada, resultado observado, estado, evidencia y defecto si aplica.
+## Planificación y diseño
 
-## INT_03 · Entradas vigentes de IA
+| ID | Tipo | Nivel | Prioridad | Escenario y resultado esperado | Responsable |
+|---|---|---|---|---|---|
+| PT_01 | Funcional y seguridad | Integración HTTP | Alta | Las credenciales y la cuenta vigentes dan acceso. Login inválido y sesiones ausentes, vencidas o alteradas devuelven 401. El cambio válido permite iniciar sesión con la clave nueva. | INT_02 |
+| PT_02 | Funcional | Integración HTTP | Alta | Alta completa, edición parcial, conflictos 409 por matrícula, búsqueda literal, filtros, paginación, baja y reactivación. Solo se asignan tutores activos y la desvinculación retira su acceso. | INT_02 |
+| PT_03 | Funcional e integridad | Integración HTTP | Alta | 6.0 aprueba. Las notas inválidas devuelven 422, las referencias ausentes 404, y un alumno inactivo o una inscripción duplicada 409. PATCH y DELETE cambian el historial. El periodo automático se reutiliza. | INT_02 |
+| PT_04 | Funcional e integración ML | Integración HTTP y persistencia | Alta | Inferencia con un alumno asignado, 404 fuera de alcance o ante un alumno ausente, y 422 con variables incompletas. BD_07 conserva la versión y el historial respeta las asignaciones. | INT_02 / INT_03 |
+| PT_05 | Funcional | Integración HTTP | Alta | El panel coincide con el lote controlado para admin y tutor, incluidos promedios, alertas RA_01 y categorías ML. También cubre RF_13 mediante las pruebas existentes de reportes. | INT_02 / INT_03 |
+| PT_06 | Integridad de datos | Base de datos | Alta | SQLite activa las claves foráneas y rechaza filas que infringen restricciones UNIQUE, FOREIGN KEY o CHECK mediante SQLAlchemy. | INT_02 |
+| PT_07 | Autorización y privacidad | Integración HTTP | Alta | La matriz RN_04 fija el HTTP exacto de cada operación por rol. Las respuestas omiten password_hash. Un administrador conserva su rol y la última cuenta administradora sigue activa. | INT_02 |
+| PT_08 | Contrato y validación ML | Componente e integración HTTP | Alta | Artefacto, esquema y columnas de entrenamiento coinciden. Una fila real produce probabilidades en rango que suman 1. Los valores inválidos devuelven 422 por campo. | INT_03 |
+| PT_09 | Evaluación ML | Componente | Alta | F1-macro ≥ 0.80, recall Dropout ≥ 0.75 y matriz de confusión coherente con el conjunto de test. | INT_03 |
+| PT_10 | Ausencia de fuga y reproducibilidad | Componente | Alta | Particiones disjuntas y estratificadas, escalador ajustado en train, horizonte temprano sin variables de segundo semestre y métricas reproducibles. | INT_03 |
+| PT_11 | Rendimiento | Integración HTTP local | Alta | Con 200 alumnos y 1,000 inscripciones, cada ruta atiende 100 solicitudes con 10 hilos, todas HTTP 200 y p95 < 1.0 s. | INT_02 / INT_03 |
+| PT_12 | Usabilidad | Aceptación | Media | Un tutor distingue una alerta RA_01 de una probabilidad ML al revisar un historial. Pendiente de ejecución de usabilidad. | INT_02 / INT_03 |
+| PT_13 | Instalación | Integración local | Alta | Migración inicial equivalente al modelo, carga de demostración idempotente, reinicio SQLite y generación válida de configuración. | INT_02 |
+| PT_14 | Regresión | Sistema vía API | Alta | Admin, operador y tutor completan el recorrido de catálogo, captura, alerta, seguimiento e inferencia. Historial, resumen, ambos CSV y eventos de bitácora coinciden con el recorrido. | INT_02 / INT_03 |
 
-Esta sección fija los IDs vigentes de IA: PT_08 es esquema/integridad, PT_09 métricas y PT_10 sin fuga/reproducibilidad. Las asignaciones del plan inicial PT_08 Integración y PT_09 Manual conservadas arriba son históricas, no corresponden a estas pruebas de IA y requieren reindexación por sus responsables fuera de INT_03. PT_11–PT_14 quedan reservados para rendimiento, usabilidad, instalación y regresión de otras tareas.
+La búsqueda PT_02 en SQLite aplica `str.casefold()` a la matrícula, el nombre y la consulta. `ÁNGELA` encuentra `Ángela` y `ANGELA` encuentra `Angela`. Las tildes se conservan y `%` y `_` se tratan como caracteres literales. Para PostgreSQL, el código utiliza `icontains(..., autoescape=True)`. Esta ejecución usa SQLite.
 
-| ID | Requerimiento / diseño | Objetivo, entrada y resultado esperado | Evidencia ejecutable | Responsable |
-|---|---|---|---|---|
-| PT_08 | RF_09 / CU_04 | Artefacto, esquema y FEATURE_SETS con columnas idénticas, sin BOM; fila real devuelve probabilidades que suman 1 y p(Dropout) en [0,1]. Faltantes, sobrantes, tipos inválidos, rangos y códigos desconocidos → 422 por campo. BOM/espacios se aceptan. ACE_03 verifica tres filas reales de test. | `backend/tests/test_ml_pt08_esquema.py` | INT_03 |
-| PT_09 | RF_08 / ML_01 / ML_02 | Entrenamiento temporal recomendado: F1-macro y recall Dropout superan constantes fijadas tras ejecución y redondeo hacia abajo a 0.05; comentario con valores observados. Matriz k×k con suma igual a test y orden de clases comprobado. | `backend/tests/test_ml_pt09_metricas.py` | INT_03 |
-| PT_10 | RF_08 / RNF_06 / ML_00 / ML_02 | Train/test disjuntos y estratificados (<1 punto de diferencia de proporción Dropout); media del escalador igual a train, distinta de todo el CSV; temprano sin 2º semestre; dos entrenamientos dan métricas idénticas. Evaluación detecta alteraciones. | `backend/tests/test_ml_pt10_fuga.py`; `ml/training/evaluate.py` | INT_03 |
-| RF_09_API / PT_07 parcial | RF_09 / CU_04 / RN_01 / RN_05 | Login del admin de settings contra SQLite temporal y lifespan real; GET model/schema y POST predict → 200 y contrato; sin token → 401/403; entrada inválida → 422; sin artefactos → 503. Caché recarga por mtime y metadatos antiguos admiten null. Sin escritura de PredictionLog. | `backend/tests/test_ml_api.py` | INT_03 |
-| RA_01 | RF_10 / RA_01_R1…R3 | Cada regla y niveles; exactamente 6.0 aprueba, exactamente 30 h activa R3; 29 h y sin empleo no la activan; sin notas/nulos → sin_datos. Llaves actuales y method conservados. | `backend/tests/test_risk.py` | INT_03 |
-| RF_15 | RF_15 / ML_02 | Ocho experimentos; recomendación por CV solo dentro del horizonte temprano fijado previamente; EXP_04 como referencia de techo, costo frente a EXP_02 generado por código. | `ml/training/experiments.py` → `ml/reports/ML_02_comparativa_modelos.md` | INT_03 |
+La matriz de PT_07 toma las operaciones principales de la arquitectura y los permisos de importación y reportes del contrato HTTP. Cruza las 44 operaciones publicadas con los tres roles, incluye ambos endpoints públicos sin token y comprueba ocho operaciones con alumnos ajenos para los tres roles. Los casos de instalación existentes se ejecutan como PT_13. Las pruebas unitarias de `test_risk.py` conservan el identificador RA_01 y la cobertura de RF_10. [Arquitectura](arquitectura.md) · [Contrato HTTP](contrato-api.md)
 
-### INT_03 · Ejecución y aislamiento
+## Ejecución y evidencias
+
+Ejecutar desde la raíz del repositorio con las dependencias locales instaladas.
 
 ```bash
-source backend/.venv/bin/activate
-python ml/training/experiments.py
-python ml/training/train.py
-python ml/training/evaluate.py
-cd backend && pytest -q
+mkdir -p docs/pruebas
+cd backend
+.venv/bin/python -m pytest -q
+set -o pipefail
+{
+  date -Iseconds
+  .venv/bin/python --version
+  .venv/bin/python -m pytest -v -rA --junitxml=../docs/pruebas/junit_backend.xml
+} 2>&1 | tee ../docs/pruebas/evidencia_pytest_backend.txt
 ```
 
-`backend/tests/conftest.py` agrega la raíz al sys.path, entrena CONFIG_RECOMENDADA una vez por sesión en un directorio temporal (<60 s), cambia settings.model_path durante la sesión y crea una BD SQLite temporal para cada prueba HTTP. Ninguna prueba necesita el joblib local ni importa matplotlib. El bucle de TestClient tiene un latido por temporizador para funcionar también en sandboxes que bloquean el aviso por socketpair; se ejecuta el lifespan completo y el login real. No se instalan dependencias nuevas.
+Los casos HTTP reutilizan el lifespan real, SQLite temporal y el modelo `1.0.0-pruebas` que `conftest.py` entrena una vez por sesión con datos locales. PT_06 ejecuta SQL contra su propia base temporal. PT_11 mide cada ruta en un lote separado después de una solicitud de calentamiento por ruta. El test actualiza `PT_11_rendimiento.json` con p50, p95, máximo, rendimiento y códigos HTTP. El lote de estudiantes solicita las 200 filas. Cada POST medido ejecuta el modelo y guarda la predicción.
 
-Los mínimos de PT_09 se encuentran en las constantes del test y sus valores observados en el comentario generado desde model_card.json. RF_11/RN_03 (persistencia) y RN_04 (restricción por rol) siguen pendientes de INT_02 según `docs/contrato-ml.md`.
+Cada ejecución registra fecha, versión, entradas, resultado esperado, resultado obtenido, comparativa, decisión y evidencia. Se registra cada defecto real con un ID `BUG_BE_0X` y el caso esperado permanece ejecutable con `xfail(strict=True)`. Una aprobación inesperada obliga a revisar esa marca.
 
-### INT_03 · Registro de ejecución
+- [Matriz RF ↔ CU ↔ MOD ↔ PT ↔ pruebas](matriz-trazabilidad.md)
+- [Resultados y decisión del backend](pruebas/resultados_backend.md)
+- [Bitácora de defectos](pruebas/bugs_backend.md)
+- [Evidencia previa de instalación PT_13](manual-instalacion/evidencia_PT_13.txt)
+- [Contrato OpenAPI para frontend](openapi.json)
 
-Fecha de la evidencia HTTP: `2026-11-03T03:12:05.822347+00:00`; modelo `1.0.0`; SHA-256 `6bcfb6b3c826c4b8b9c7a99c063762748f6f462e24aabd26719ec2e55fed6135`; responsable INT_03.
+## Evidencia previa de IA
 
-| ID | Entrada / evidencia | Resultado observado | Estado / defecto |
-|---|---|---|---|
-| PT_08 / PT_09 / PT_10 / RF_09_API / RA_01 | `cd backend && pytest -q`; modelo y SQLite temporales, filas reales de test | 48 pruebas aprobadas en 6.04 s; sin matplotlib; un aviso de deprecación de Starlette sobre httpx | Correcto; sin defectos detectados en el alcance |
-| INT_03 | `python -m pytest -q ml/tests`; selección por CV y tolerancia | 2 controles rápidos aprobados en 1.00 s | Correcto |
-| PT_10 | `python ml/training/evaluate.py`; artefacto local de la versión indicada | matches_saved_metrics=true, diferencias=0, tolerancia absoluta 1e-09 | Correcto |
-
-La salida HTTP real usada como evidencia está transcrita en `docs/contrato-ml.md`. El aviso de la dependencia no requiere ni motivó instalar paquetes adicionales.
+INT_03 registró una corrida anterior el `2026-11-03T03:12:05.822347+00:00` con modelo `1.0.0` y SHA-256 de datos `6bcfb6b3c826c4b8b9c7a99c063762748f6f462e24aabd26719ec2e55fed6135`. Pasaron 48 casos de backend y 2 controles de `ml/tests`. La evaluación del artefacto local reportó `matches_saved_metrics=true` con tolerancia absoluta de 1e-09. La comparativa RF_15 mantiene los ocho experimentos y la selección por CV dentro del horizonte temprano. [Contrato ML](contrato-ml.md)

@@ -1,8 +1,10 @@
+"""INT_02 · Configuración de autenticación RF_01 e integridad RNF_03."""
 from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     database_url: str = "sqlite:///./sipde.db"
+    auto_create_tables: bool = True
     jwt_secret: str = ""
     admin_email: str = ""
     admin_password: str = ""

@@ -29,12 +29,17 @@ def test_contrato_autenticado(api_client, auth_headers, real_features, trained_m
     assert body['modelo']['version'] == trained_model.artifact['version']
     assert datetime.fromisoformat(body['fecha_prediccion']).utcoffset() == timedelta(0)
     assert body['probabilidad_desercion'] == body['probabilidades']['Dropout']
-    # RN_03 / RF_11: INT_03 no escribe historial; la conexión corresponde a INT_02.
-    from sqlalchemy import func, select
+    # RN_03 / RF_11: INT_02 persiste cada predicción exitosa con versión, clase y probabilidad.
+    from sqlalchemy import select
     from app.database import SessionLocal
     from app.models import PredictionLog
     with SessionLocal() as db:
-        assert db.scalar(select(func.count()).select_from(PredictionLog)) == 0
+        logs = db.scalars(select(PredictionLog)).all()
+    assert len(logs) == 1
+    assert body['prediction_id'] == logs[0].id
+    assert logs[0].model_version == trained_model.artifact['version']
+    assert logs[0].probability_dropout == pytest.approx(body['probabilidad_desercion'])
+    assert logs[0].student_id is None
 
 
 @pytest.mark.parametrize(('method', 'path'), [
