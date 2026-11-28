@@ -1,0 +1,172 @@
+Cloning into '/tmp/sipde_pt13'...
+done.
+PT_13 · Verificación del backend desde un clon local
+2026-11-24T22:17:42-06:00
+$ git clone --no-checkout --no-hardlinks --local . /tmp/sipde_pt13
+Clon local creado. Se copió el árbol de trabajo con rsync, excluyendo secretos, BD, venv, cachés, node_modules y joblib.
+f4633a9
+Comprobado: el clon comienza sin .env, sipde.db ni dropout_model.joblib.
+$ python3 -m venv backend/.venv
+include-system-site-packages = false
+$ backend/.venv/bin/python -m pip install --no-index -r backend/scripts/requirements-instalacion.txt
+WARNING: The directory '/home/charlypc/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+ERROR: Could not find a version that satisfies the requirement fastapi<1,>=0.115 (from versions: none)
+ERROR: No matching distribution found for fastapi<1,>=0.115
+Sin distribuciones locales disponibles. Se reutiliza el venv existente sin red.
+Python 3.13.5
+$ python backend/scripts/generar_env.py
+Configuración creada en backend/.env.
+ADMIN_EMAIL=admin@sipde.local
+ADMIN_PASSWORD=[ENMASCARADA]
+POSTGRES_PASSWORD=[ENMASCARADA]
+$ python ml/training/train.py
+ML_02 · Reporte de clasificación
+Clase | Precisión | Sensibilidad | F1 | Soporte
+Dropout | 0.750853 | 0.774648 | 0.762565 | 284
+No_Dropout | 0.891892 | 0.878536 | 0.885163 | 601
+F1-macro: 0.823864222; exactitud: 0.845197740; exactitud balanceada: 0.826591831
+Recall de Dropout: 0.774647887; precisión de Dropout: 0.750853242; ROC-AUC: 0.909259216; Brier: 0.109551274
+ML_02: clases=['Dropout', 'No_Dropout']; matriz de confusión=[[220, 64], [73, 528]]
+ML_02: hiperparámetros={'classifier__C': 1}; CV={'f1_macro_mean': 0.829781245402225, 'f1_macro_std': 0.009661227900224516, 'recall_dropout_mean': 0.8003361929051704}
+ML_02: artefacto 1.0.0 guardado en /tmp/sipde_pt13/ml/artifacts/dropout_model.joblib
+$ python -m alembic upgrade head
+$ python -m alembic current
+0001_esquema_inicial (head)
+$ python -m app.seed
+DATOS FICTICIOS DE DEMOSTRACIÓN
+Totales por tabla:
+  careers: 3
+  periods: 4
+  subjects: 12
+  users: 4
+  audit_logs: 15
+  students: 40
+  enrollments: 160
+  followups: 20
+  prediction_logs: 15
+Cuentas de demostración:
+  Administrador: admin@sipde.local
+  ADMIN_PASSWORD=[ENMASCARADA]
+  tutor: tutor1@sipde.local
+  tutor: tutor2@sipde.local
+  operador: operador@sipde.local
+  SEED_PASSWORD=[ENMASCARADA] (cuentas nuevas: tutor1@sipde.local, tutor2@sipde.local, operador@sipde.local)
+$ python -m uvicorn app.main:app --host 127.0.0.1 --port 18743 &
+$ curl --fail --show-error http://127.0.0.1:18743/api/health
+curl: (7) Failed to connect to 127.0.0.1 port 18743 after 0 ms: Could not connect to server
+Uvicorn finalizó con código 143.
+INFO:     Started server process [122]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:18743 (Press CTRL+C to quit)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [122]
+$ python (TestClient ASGI con lifespan real, sin socket TCP)
+/home/charlypc/Documentos/ESCUELA/ING SOFTWARE - BLANCO/Prediccion-de-Desercion-Escolar/backend/.venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+GET /api/health HTTP 200 {"status":"ok","service":"SIPDE"}
+GET /docs HTTP 200
+POST /api/auth/login HTTP 200: {"token_type": "bearer", "role": "admin", "user": {"id": 1, "email": "admin@sipde.local", "full_name": "Administrador · DATOS FICTICIOS DE DEMOSTRACIÓN", "role": "admin"}, "access_token": "[ENMASCARADO]"}
+GET /api/dashboard HTTP 200
+{
+  "students": 40,
+  "subjects": 12,
+  "enrollments": 160,
+  "active_students": 37,
+  "inactive_students": 3,
+  "students_by_status": {
+    "activo": 37,
+    "baja_temporal": 2,
+    "baja_definitiva": 1,
+    "egresado": 0
+  },
+  "students_by_career": [
+    {
+      "career": "Ingeniería en Inteligencia Artificial",
+      "count": 13
+    },
+    {
+      "career": "Ingeniería en Sistemas Computacionales",
+      "count": 14
+    },
+    {
+      "career": "Licenciatura en Ciencia de Datos",
+      "count": 13
+    }
+  ],
+  "average_grade": 7.02,
+  "failed_enrollments": 50,
+  "alerts_by_level": {
+    "baja": 10,
+    "media": 9,
+    "alta": 9,
+    "sin_datos": 9
+  },
+  "predictions": 15,
+  "predictions_by_category": {
+    "baja": 10,
+    "media": 5,
+    "alta": 0
+  },
+  "last_predictions": [
+    {
+      "id": 15,
+      "student_id": 15,
+      "user_id": 1,
+      "model_version": "1.0.0",
+      "task": "binaria",
+      "predicted_class": "No_Dropout",
+      "probability_dropout": 0.03360214446870591,
+      "risk_category": "baja",
+      "created_at": "2026-11-25T04:17:50.636156Z"
+    },
+    {
+      "id": 14,
+      "student_id": 14,
+      "user_id": 1,
+      "model_version": "1.0.0",
+      "task": "binaria",
+      "predicted_class": "No_Dropout",
+      "probability_dropout": 0.03479488936417707,
+      "risk_category": "baja",
+      "created_at": "2026-11-25T04:17:50.623650Z"
+    },
+    {
+      "id": 13,
+      "student_id": 13,
+      "user_id": 1,
+      "model_version": "1.0.0",
+      "task": "binaria",
+      "predicted_class": "No_Dropout",
+      "probability_dropout": 0.4051158285182902,
+      "risk_category": "media",
+      "created_at": "2026-11-25T04:17:50.611319Z"
+    },
+    {
+      "id": 12,
+      "student_id": 12,
+      "user_id": 1,
+      "model_version": "1.0.0",
+      "task": "binaria",
+      "predicted_class": "No_Dropout",
+      "probability_dropout": 0.03360214446870591,
+      "risk_category": "baja",
+      "created_at": "2026-11-25T04:17:50.598095Z"
+    },
+    {
+      "id": 11,
+      "student_id": 11,
+      "user_id": 1,
+      "model_version": "1.0.0",
+      "task": "binaria",
+      "predicted_class": "No_Dropout",
+      "probability_dropout": 0.03479488936417707,
+      "risk_category": "baja",
+      "created_at": "2026-11-25T04:17:50.585712Z"
+    }
+  ]
+}
+El ciclo de vida ASGI se cerró correctamente.
+Directorio temporal /tmp/sipde_pt13 eliminado.

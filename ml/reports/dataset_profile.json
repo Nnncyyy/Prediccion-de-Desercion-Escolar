@@ -1,0 +1,275 @@
+{
+  "id": "ML_01",
+  "filas": 4424,
+  "columnas": 35,
+  "variables_predictoras": 34,
+  "nulos_por_columna": {
+    "Marital status": 0,
+    "Application mode": 0,
+    "Application order": 0,
+    "Course": 0,
+    "Daytime/evening attendance": 0,
+    "Previous qualification": 0,
+    "Nacionality": 0,
+    "Mother's qualification": 0,
+    "Father's qualification": 0,
+    "Mother's occupation": 0,
+    "Father's occupation": 0,
+    "Displaced": 0,
+    "Educational special needs": 0,
+    "Debtor": 0,
+    "Tuition fees up to date": 0,
+    "Gender": 0,
+    "Scholarship holder": 0,
+    "Age at enrollment": 0,
+    "International": 0,
+    "Curricular units 1st sem (credited)": 0,
+    "Curricular units 1st sem (enrolled)": 0,
+    "Curricular units 1st sem (evaluations)": 0,
+    "Curricular units 1st sem (approved)": 0,
+    "Curricular units 1st sem (grade)": 0,
+    "Curricular units 1st sem (without evaluations)": 0,
+    "Curricular units 2nd sem (credited)": 0,
+    "Curricular units 2nd sem (enrolled)": 0,
+    "Curricular units 2nd sem (evaluations)": 0,
+    "Curricular units 2nd sem (approved)": 0,
+    "Curricular units 2nd sem (grade)": 0,
+    "Curricular units 2nd sem (without evaluations)": 0,
+    "Unemployment rate": 0,
+    "Inflation rate": 0,
+    "GDP": 0,
+    "Target": 0
+  },
+  "duplicados": 0,
+  "tipos": {
+    "Marital status": "int64",
+    "Application mode": "int64",
+    "Application order": "int64",
+    "Course": "int64",
+    "Daytime/evening attendance": "int64",
+    "Previous qualification": "int64",
+    "Nacionality": "int64",
+    "Mother's qualification": "int64",
+    "Father's qualification": "int64",
+    "Mother's occupation": "int64",
+    "Father's occupation": "int64",
+    "Displaced": "int64",
+    "Educational special needs": "int64",
+    "Debtor": "int64",
+    "Tuition fees up to date": "int64",
+    "Gender": "int64",
+    "Scholarship holder": "int64",
+    "Age at enrollment": "int64",
+    "International": "int64",
+    "Curricular units 1st sem (credited)": "int64",
+    "Curricular units 1st sem (enrolled)": "int64",
+    "Curricular units 1st sem (evaluations)": "int64",
+    "Curricular units 1st sem (approved)": "int64",
+    "Curricular units 1st sem (grade)": "float64",
+    "Curricular units 1st sem (without evaluations)": "int64",
+    "Curricular units 2nd sem (credited)": "int64",
+    "Curricular units 2nd sem (enrolled)": "int64",
+    "Curricular units 2nd sem (evaluations)": "int64",
+    "Curricular units 2nd sem (approved)": "int64",
+    "Curricular units 2nd sem (grade)": "float64",
+    "Curricular units 2nd sem (without evaluations)": "int64",
+    "Unemployment rate": "float64",
+    "Inflation rate": "float64",
+    "GDP": "float64",
+    "Target": "object"
+  },
+  "estadisticas": {
+    "Marital status": {
+      "min": 1.0,
+      "max": 6.0,
+      "media": 1.1785714285714286
+    },
+    "Application mode": {
+      "min": 1.0,
+      "max": 18.0,
+      "media": 6.886980108499096
+    },
+    "Application order": {
+      "min": 0.0,
+      "max": 9.0,
+      "media": 1.7278481012658229
+    },
+    "Course": {
+      "min": 1.0,
+      "max": 17.0,
+      "media": 9.899186256781194
+    },
+    "Daytime/evening attendance": {
+      "min": 0.0,
+      "max": 1.0,
+      "media": 0.8908227848101266
+    },
+    "Previous qualification": {
+      "min": 1.0,
+      "max": 17.0,
+      "media": 2.5314195298372515
+    },
+    "Nacionality": {
+      "min": 1.0,
+      "max": 21.0,
+      "media": 1.2545207956600362
+    },
+    "Mother's qualification": {
+      "min": 1.0,
+      "max": 29.0,
+      "media": 12.322106690777577
+    },
+    "Father's qualification": {
+      "min": 1.0,
+      "max": 34.0,
+      "media": 16.45524412296564
+    },
+    "Mother's occupation": {
+      "min": 1.0,
+      "max": 32.0,
+      "media": 7.317811934900543
+    },
+    "Father's occupation": {
+      "min": 1.0,
+      "max": 46.0,
+      "media": 7.819168173598554
+    },
+    "Displaced": {
+      "min": 0.0,
+      "max": 1.0,
+      "media": 0.548372513562387
+    },
+    "Educational special needs": {
+      "min": 0.0,
+      "max": 1.0,
+      "media": 0.011528028933092224
+    },
+    "Debtor": {
+      "min": 0.0,
+      "max": 1.0,
+      "media": 0.11369801084990959
+    },
+    "Tuition fees up to date": {
+      "min": 0.0,
+      "max": 1.0,
+      "media": 0.8806509945750453
+    },
+    "Gender": {
+      "min": 0.0,
+      "max": 1.0,
+      "media": 0.35171790235081374
+    },
+    "Scholarship holder": {
+      "min": 0.0,
+      "max": 1.0,
+      "media": 0.24841772151898733
+    },
+    "Age at enrollment": {
+      "min": 17.0,
+      "max": 70.0,
+      "media": 23.265144665461122
+    },
+    "International": {
+      "min": 0.0,
+      "max": 1.0,
+      "media": 0.024864376130198915
+    },
+    "Curricular units 1st sem (credited)": {
+      "min": 0.0,
+      "max": 20.0,
+      "media": 0.7099909584086799
+    },
+    "Curricular units 1st sem (enrolled)": {
+      "min": 0.0,
+      "max": 26.0,
+      "media": 6.2705696202531644
+    },
+    "Curricular units 1st sem (evaluations)": {
+      "min": 0.0,
+      "max": 45.0,
+      "media": 8.299050632911392
+    },
+    "Curricular units 1st sem (approved)": {
+      "min": 0.0,
+      "max": 26.0,
+      "media": 4.706600361663653
+    },
+    "Curricular units 1st sem (grade)": {
+      "min": 0.0,
+      "max": 18.875,
+      "media": 10.640821575154185
+    },
+    "Curricular units 1st sem (without evaluations)": {
+      "min": 0.0,
+      "max": 12.0,
+      "media": 0.13765822784810128
+    },
+    "Curricular units 2nd sem (credited)": {
+      "min": 0.0,
+      "max": 19.0,
+      "media": 0.5418173598553345
+    },
+    "Curricular units 2nd sem (enrolled)": {
+      "min": 0.0,
+      "max": 23.0,
+      "media": 6.232142857142857
+    },
+    "Curricular units 2nd sem (evaluations)": {
+      "min": 0.0,
+      "max": 33.0,
+      "media": 8.063291139240507
+    },
+    "Curricular units 2nd sem (approved)": {
+      "min": 0.0,
+      "max": 20.0,
+      "media": 4.435804701627487
+    },
+    "Curricular units 2nd sem (grade)": {
+      "min": 0.0,
+      "max": 18.571428571428573,
+      "media": 10.230205722716985
+    },
+    "Curricular units 2nd sem (without evaluations)": {
+      "min": 0.0,
+      "max": 12.0,
+      "media": 0.15031645569620253
+    },
+    "Unemployment rate": {
+      "min": 7.6,
+      "max": 16.2,
+      "media": 11.56613924050633
+    },
+    "Inflation rate": {
+      "min": -0.8,
+      "max": 3.7,
+      "media": 1.228028933092224
+    },
+    "GDP": {
+      "min": -4.06,
+      "max": 3.51,
+      "media": 0.001968806509945778
+    },
+    "Target": {
+      "min": null,
+      "max": null,
+      "media": null
+    }
+  },
+  "clases": {
+    "Dropout": {
+      "conteo": 1421,
+      "porcentaje": 32.120253164556964
+    },
+    "Enrolled": {
+      "conteo": 794,
+      "porcentaje": 17.94755877034358
+    },
+    "Graduate": {
+      "conteo": 2209,
+      "porcentaje": 49.93218806509946
+    }
+  },
+  "sha256": "6bcfb6b3c826c4b8b9c7a99c063762748f6f462e24aabd26719ec2e55fed6135",
+  "pandas_version": "2.3.3",
+  "nota": "La media de códigos nominales no tiene interpretación ordinal; Target no tiene media numérica."
+}

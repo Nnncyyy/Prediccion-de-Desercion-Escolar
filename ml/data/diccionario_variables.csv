@@ -1,0 +1,35 @@
+id,columna,descripcion_es,tipo,momento,min,max,grupo_modelo
+VAR_01,Marital status,Estado civil,nominal,inscripción,1.0,6.0,temprano y completo
+VAR_02,Application mode,Modalidad de acceso,nominal,inscripción,1.0,18.0,temprano y completo
+VAR_03,Application order,Orden de preferencia de la solicitud,numérica,inscripción,0.0,9.0,temprano y completo
+VAR_04,Course,Carrera cursada,nominal,inscripción,1.0,17.0,temprano y completo
+VAR_05,Daytime/evening attendance,Asistencia diurna o nocturna,binaria,inscripción,0.0,1.0,temprano y completo
+VAR_06,Previous qualification,Titulación previa,nominal,inscripción,1.0,17.0,temprano y completo
+VAR_07,Nacionality,Nacionalidad,nominal,inscripción,1.0,21.0,temprano y completo
+VAR_08,Mother's qualification,Escolaridad materna,nominal,inscripción,1.0,29.0,temprano y completo
+VAR_09,Father's qualification,Escolaridad paterna,nominal,inscripción,1.0,34.0,temprano y completo
+VAR_10,Mother's occupation,Ocupación materna,nominal,inscripción,1.0,32.0,temprano y completo
+VAR_11,Father's occupation,Ocupación paterna,nominal,inscripción,1.0,46.0,temprano y completo
+VAR_12,Displaced,Desplazamiento del domicilio habitual,binaria,inscripción,0.0,1.0,temprano y completo
+VAR_13,Educational special needs,Necesidades educativas especiales,binaria,inscripción,0.0,1.0,temprano y completo
+VAR_14,Debtor,Existencia de adeudos,binaria,inscripción,0.0,1.0,temprano y completo
+VAR_15,Tuition fees up to date,Colegiatura al corriente,binaria,inscripción,0.0,1.0,temprano y completo
+VAR_16,Gender,Género registrado,binaria,inscripción,0.0,1.0,temprano y completo
+VAR_17,Scholarship holder,Beneficiario de beca,binaria,inscripción,0.0,1.0,temprano y completo
+VAR_18,Age at enrollment,Edad al inscribirse,numérica,inscripción,17.0,70.0,temprano y completo
+VAR_19,International,Condición de estudiante internacional,binaria,inscripción,0.0,1.0,temprano y completo
+VAR_20,Curricular units 1st sem (credited),"Unidades reconocidas, primer semestre",numérica,1er semestre,0.0,20.0,temprano y completo
+VAR_21,Curricular units 1st sem (enrolled),"Unidades inscritas, primer semestre",numérica,1er semestre,0.0,26.0,temprano y completo
+VAR_22,Curricular units 1st sem (evaluations),"Evaluaciones realizadas, primer semestre",numérica,1er semestre,0.0,45.0,temprano y completo
+VAR_23,Curricular units 1st sem (approved),"Unidades aprobadas, primer semestre",numérica,1er semestre,0.0,26.0,temprano y completo
+VAR_24,Curricular units 1st sem (grade),"Promedio de unidades aprobadas, primer semestre",numérica,1er semestre,0.0,18.875,temprano y completo
+VAR_25,Curricular units 1st sem (without evaluations),"Unidades sin evaluación, primer semestre",numérica,1er semestre,0.0,12.0,temprano y completo
+VAR_26,Curricular units 2nd sem (credited),"Unidades reconocidas, segundo semestre",numérica,2º semestre,0.0,19.0,completo
+VAR_27,Curricular units 2nd sem (enrolled),"Unidades inscritas, segundo semestre",numérica,2º semestre,0.0,23.0,completo
+VAR_28,Curricular units 2nd sem (evaluations),"Evaluaciones realizadas, segundo semestre",numérica,2º semestre,0.0,33.0,completo
+VAR_29,Curricular units 2nd sem (approved),"Unidades aprobadas, segundo semestre",numérica,2º semestre,0.0,20.0,completo
+VAR_30,Curricular units 2nd sem (grade),"Promedio de unidades aprobadas, segundo semestre",numérica,2º semestre,0.0,18.571428571428573,completo
+VAR_31,Curricular units 2nd sem (without evaluations),"Unidades sin evaluación, segundo semestre",numérica,2º semestre,0.0,12.0,completo
+VAR_32,Unemployment rate,Tasa de desempleo,numérica,macroeconómica,7.6,16.2,temprano y completo
+VAR_33,Inflation rate,Tasa de inflación,numérica,macroeconómica,-0.8,3.7,temprano y completo
+VAR_34,GDP,Variación del producto interno bruto,numérica,macroeconómica,-4.06,3.51,temprano y completo

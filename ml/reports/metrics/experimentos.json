@@ -1,0 +1,803 @@
+{
+  "id": "ML_02",
+  "metadata": {
+    "dataset_sha256": "6bcfb6b3c826c4b8b9c7a99c063762748f6f462e24aabd26719ec2e55fed6135",
+    "seed": 42,
+    "sklearn_version": "1.9.1",
+    "pandas_version": "2.3.3",
+    "numpy_version": "2.5.4"
+  },
+  "experiments": [
+    {
+      "id": "EXP_00",
+      "model_name": "dummy_prior",
+      "feature_set": "temprano",
+      "task": "binaria",
+      "n_features": 28,
+      "n_train": 3539,
+      "best_params": {
+        "strategy": "prior"
+      },
+      "cv": {
+        "f1_macro_mean": 0.4043089726479236,
+        "f1_macro_std": 0.00022701391948639306,
+        "recall_dropout_mean": 0.0
+      },
+      "test": {
+        "accuracy": 0.6790960451977401,
+        "balanced_accuracy": 0.5,
+        "f1_macro": 0.4044414535666218,
+        "recall_dropout": 0.0,
+        "precision_dropout": 0.0,
+        "f1_dropout": 0.0,
+        "roc_auc": 0.5,
+        "brier_dropout": 0.2179247459042286,
+        "confusion_matrix": [
+          [
+            0,
+            284
+          ],
+          [
+            0,
+            601
+          ]
+        ],
+        "classes": [
+          "Dropout",
+          "No_Dropout"
+        ],
+        "n_test": 885,
+        "classification_report": {
+          "Dropout": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 284.0
+          },
+          "No_Dropout": {
+            "precision": 0.6790960451977401,
+            "recall": 1.0,
+            "f1-score": 0.8088829071332436,
+            "support": 601.0
+          },
+          "accuracy": 0.6790960451977401,
+          "macro avg": {
+            "precision": 0.33954802259887007,
+            "recall": 0.5,
+            "f1-score": 0.4044414535666218,
+            "support": 885.0
+          },
+          "weighted avg": {
+            "precision": 0.46117143860321114,
+            "recall": 0.6790960451977401,
+            "f1-score": 0.5493091832622367,
+            "support": 885.0
+          }
+        }
+      }
+    },
+    {
+      "id": "EXP_01",
+      "model_name": "logreg",
+      "feature_set": "temprano",
+      "task": "multiclase",
+      "n_features": 28,
+      "n_train": 3539,
+      "best_params": {
+        "classifier__C": 0.1
+      },
+      "cv": {
+        "f1_macro_mean": 0.683787120194797,
+        "f1_macro_std": 0.020902172110044158,
+        "recall_dropout_mean": 0.6930095061442152
+      },
+      "test": {
+        "accuracy": 0.6994350282485876,
+        "balanced_accuracy": 0.6701082301315219,
+        "f1_macro": 0.6609335252382735,
+        "recall_dropout": 0.6584507042253521,
+        "precision_dropout": 0.8025751072961373,
+        "f1_dropout": 0.723404255319149,
+        "roc_auc": 0.859505116701437,
+        "brier_dropout": 0.10917509874918017,
+        "confusion_matrix": [
+          [
+            187,
+            68,
+            29
+          ],
+          [
+            25,
+            93,
+            41
+          ],
+          [
+            21,
+            82,
+            339
+          ]
+        ],
+        "classes": [
+          "Dropout",
+          "Enrolled",
+          "Graduate"
+        ],
+        "n_test": 885,
+        "classification_report": {
+          "Dropout": {
+            "precision": 0.8025751072961373,
+            "recall": 0.6584507042253521,
+            "f1-score": 0.723404255319149,
+            "support": 284.0
+          },
+          "Enrolled": {
+            "precision": 0.38271604938271603,
+            "recall": 0.5849056603773585,
+            "f1-score": 0.4626865671641791,
+            "support": 159.0
+          },
+          "Graduate": {
+            "precision": 0.8288508557457213,
+            "recall": 0.7669683257918553,
+            "f1-score": 0.7967097532314924,
+            "support": 442.0
+          },
+          "accuracy": 0.6994350282485876,
+          "macro avg": {
+            "precision": 0.6713806708081916,
+            "recall": 0.6701082301315219,
+            "f1-score": 0.6609335252382735,
+            "support": 885.0
+          },
+          "weighted avg": {
+            "precision": 0.7402658311452697,
+            "recall": 0.6994350282485876,
+            "f1-score": 0.713174783749223,
+            "support": 885.0
+          }
+        }
+      }
+    },
+    {
+      "id": "EXP_02",
+      "model_name": "logreg",
+      "feature_set": "temprano",
+      "task": "binaria",
+      "n_features": 28,
+      "n_train": 3539,
+      "best_params": {
+        "classifier__C": 1
+      },
+      "cv": {
+        "f1_macro_mean": 0.829781245402225,
+        "f1_macro_std": 0.009661227900224516,
+        "recall_dropout_mean": 0.8003361929051704
+      },
+      "test": {
+        "accuracy": 0.8451977401129943,
+        "balanced_accuracy": 0.8265918305172131,
+        "f1_macro": 0.8238642224065571,
+        "recall_dropout": 0.7746478873239436,
+        "precision_dropout": 0.7508532423208191,
+        "f1_dropout": 0.7625649913344887,
+        "roc_auc": 0.9092592158608891,
+        "brier_dropout": 0.10955127387938715,
+        "confusion_matrix": [
+          [
+            220,
+            64
+          ],
+          [
+            73,
+            528
+          ]
+        ],
+        "classes": [
+          "Dropout",
+          "No_Dropout"
+        ],
+        "n_test": 885,
+        "classification_report": {
+          "Dropout": {
+            "precision": 0.7508532423208191,
+            "recall": 0.7746478873239436,
+            "f1-score": 0.7625649913344887,
+            "support": 284.0
+          },
+          "No_Dropout": {
+            "precision": 0.8918918918918919,
+            "recall": 0.8785357737104825,
+            "f1-score": 0.8851634534786254,
+            "support": 601.0
+          },
+          "accuracy": 0.8451977401129943,
+          "macro avg": {
+            "precision": 0.8213725671063554,
+            "recall": 0.8265918305172131,
+            "f1-score": 0.8238642224065571,
+            "support": 885.0
+          },
+          "weighted avg": {
+            "precision": 0.8466320314645644,
+            "recall": 0.8451977401129943,
+            "f1-score": 0.8458211221238968,
+            "support": 885.0
+          }
+        }
+      }
+    },
+    {
+      "id": "EXP_03",
+      "model_name": "logreg",
+      "feature_set": "completo",
+      "task": "multiclase",
+      "n_features": 34,
+      "n_train": 3539,
+      "best_params": {
+        "classifier__C": 0.1
+      },
+      "cv": {
+        "f1_macro_mean": 0.7189238092548708,
+        "f1_macro_std": 0.018824245827531217,
+        "recall_dropout_mean": 0.7352306978900996
+      },
+      "test": {
+        "accuracy": 0.7322033898305085,
+        "balanced_accuracy": 0.7114424645141688,
+        "f1_macro": 0.6972411763113809,
+        "recall_dropout": 0.6866197183098591,
+        "precision_dropout": 0.8227848101265823,
+        "f1_dropout": 0.7485604606525912,
+        "roc_auc": 0.8827577713293797,
+        "brier_dropout": 0.10048313677777956,
+        "confusion_matrix": [
+          [
+            195,
+            64,
+            25
+          ],
+          [
+            25,
+            105,
+            29
+          ],
+          [
+            17,
+            77,
+            348
+          ]
+        ],
+        "classes": [
+          "Dropout",
+          "Enrolled",
+          "Graduate"
+        ],
+        "n_test": 885,
+        "classification_report": {
+          "Dropout": {
+            "precision": 0.8227848101265823,
+            "recall": 0.6866197183098591,
+            "f1-score": 0.7485604606525912,
+            "support": 284.0
+          },
+          "Enrolled": {
+            "precision": 0.4268292682926829,
+            "recall": 0.660377358490566,
+            "f1-score": 0.5185185185185185,
+            "support": 159.0
+          },
+          "Graduate": {
+            "precision": 0.8656716417910447,
+            "recall": 0.7873303167420814,
+            "f1-score": 0.8246445497630331,
+            "support": 442.0
+          },
+          "accuracy": 0.7322033898305085,
+          "macro avg": {
+            "precision": 0.7050952400701034,
+            "recall": 0.7114424645141688,
+            "f1-score": 0.6972411763113809,
+            "support": 885.0
+          },
+          "weighted avg": {
+            "precision": 0.7730662207978845,
+            "recall": 0.7322033898305085,
+            "f1-score": 0.7452299505819672,
+            "support": 885.0
+          }
+        }
+      }
+    },
+    {
+      "id": "EXP_04",
+      "model_name": "logreg",
+      "feature_set": "completo",
+      "task": "binaria",
+      "n_features": 34,
+      "n_train": 3539,
+      "best_params": {
+        "classifier__C": 1
+      },
+      "cv": {
+        "f1_macro_mean": 0.8461674836634717,
+        "f1_macro_std": 0.009865415803725604,
+        "recall_dropout_mean": 0.8179418811345543
+      },
+      "test": {
+        "accuracy": 0.8768361581920904,
+        "balanced_accuracy": 0.8619583557919899,
+        "f1_macro": 0.8596106967436783,
+        "recall_dropout": 0.8204225352112676,
+        "precision_dropout": 0.8006872852233677,
+        "f1_dropout": 0.8104347826086956,
+        "roc_auc": 0.918896908907689,
+        "brier_dropout": 0.09867271157530362,
+        "confusion_matrix": [
+          [
+            233,
+            51
+          ],
+          [
+            58,
+            543
+          ]
+        ],
+        "classes": [
+          "Dropout",
+          "No_Dropout"
+        ],
+        "n_test": 885,
+        "classification_report": {
+          "Dropout": {
+            "precision": 0.8006872852233677,
+            "recall": 0.8204225352112676,
+            "f1-score": 0.8104347826086956,
+            "support": 284.0
+          },
+          "No_Dropout": {
+            "precision": 0.9141414141414141,
+            "recall": 0.9034941763727121,
+            "f1-score": 0.9087866108786611,
+            "support": 601.0
+          },
+          "accuracy": 0.8768361581920904,
+          "macro avg": {
+            "precision": 0.8574143496823909,
+            "recall": 0.8619583557919899,
+            "f1-score": 0.8596106967436783,
+            "support": 885.0
+          },
+          "weighted avg": {
+            "precision": 0.8777335354829677,
+            "recall": 0.8768361581920904,
+            "f1-score": 0.8772251202247965,
+            "support": 885.0
+          }
+        }
+      }
+    },
+    {
+      "id": "EXP_05",
+      "model_name": "arbol",
+      "feature_set": "temprano",
+      "task": "multiclase",
+      "n_features": 28,
+      "n_train": 3539,
+      "best_params": {
+        "classifier__max_depth": 6,
+        "classifier__min_samples_leaf": 1
+      },
+      "cv": {
+        "f1_macro_mean": 0.6310774052186257,
+        "f1_macro_std": 0.014115494046159548,
+        "recall_dropout_mean": 0.6199629028518433
+      },
+      "test": {
+        "accuracy": 0.6282485875706215,
+        "balanced_accuracy": 0.6255307726912047,
+        "f1_macro": 0.607334411901606,
+        "recall_dropout": 0.5704225352112676,
+        "precision_dropout": 0.8140703517587939,
+        "f1_dropout": 0.6708074534161491,
+        "roc_auc": 0.8184965011173032,
+        "brier_dropout": 0.13401699885989277,
+        "confusion_matrix": [
+          [
+            162,
+            94,
+            28
+          ],
+          [
+            27,
+            103,
+            29
+          ],
+          [
+            10,
+            141,
+            291
+          ]
+        ],
+        "classes": [
+          "Dropout",
+          "Enrolled",
+          "Graduate"
+        ],
+        "n_test": 885,
+        "classification_report": {
+          "Dropout": {
+            "precision": 0.8140703517587939,
+            "recall": 0.5704225352112676,
+            "f1-score": 0.6708074534161491,
+            "support": 284.0
+          },
+          "Enrolled": {
+            "precision": 0.3047337278106509,
+            "recall": 0.6477987421383647,
+            "f1-score": 0.41448692152917505,
+            "support": 159.0
+          },
+          "Graduate": {
+            "precision": 0.8362068965517241,
+            "recall": 0.6583710407239819,
+            "f1-score": 0.7367088607594937,
+            "support": 442.0
+          },
+          "accuracy": 0.6282485875706215,
+          "macro avg": {
+            "precision": 0.6516703253737229,
+            "recall": 0.6255307726912047,
+            "f1-score": 0.607334411901606,
+            "support": 885.0
+          },
+          "weighted avg": {
+            "precision": 0.7336181818048058,
+            "recall": 0.6282485875706215,
+            "f1-score": 0.6576701172305327,
+            "support": 885.0
+          }
+        }
+      }
+    },
+    {
+      "id": "EXP_06",
+      "model_name": "arbol",
+      "feature_set": "temprano",
+      "task": "binaria",
+      "n_features": 28,
+      "n_train": 3539,
+      "best_params": {
+        "classifier__max_depth": 4,
+        "classifier__min_samples_leaf": 30
+      },
+      "cv": {
+        "f1_macro_mean": 0.8003068140241375,
+        "f1_macro_std": 0.004826375199728832,
+        "recall_dropout_mean": 0.7607581729654533
+      },
+      "test": {
+        "accuracy": 0.8158192090395481,
+        "balanced_accuracy": 0.7993895151273699,
+        "f1_macro": 0.7929717604612013,
+        "recall_dropout": 0.7535211267605634,
+        "precision_dropout": 0.6970684039087948,
+        "f1_dropout": 0.7241962774957699,
+        "roc_auc": 0.8706527852639967,
+        "brier_dropout": 0.1319098349634506,
+        "confusion_matrix": [
+          [
+            214,
+            70
+          ],
+          [
+            93,
+            508
+          ]
+        ],
+        "classes": [
+          "Dropout",
+          "No_Dropout"
+        ],
+        "n_test": 885,
+        "classification_report": {
+          "Dropout": {
+            "precision": 0.6970684039087948,
+            "recall": 0.7535211267605634,
+            "f1-score": 0.7241962774957699,
+            "support": 284.0
+          },
+          "No_Dropout": {
+            "precision": 0.8788927335640139,
+            "recall": 0.8452579034941764,
+            "f1-score": 0.8617472434266328,
+            "support": 601.0
+          },
+          "accuracy": 0.8158192090395481,
+          "macro avg": {
+            "precision": 0.7879805687364043,
+            "recall": 0.7993895151273699,
+            "f1-score": 0.7929717604612013,
+            "support": 885.0
+          },
+          "weighted avg": {
+            "precision": 0.8205445870983842,
+            "recall": 0.8158192090395481,
+            "f1-score": 0.8176065944725479,
+            "support": 885.0
+          }
+        }
+      }
+    },
+    {
+      "id": "EXP_07",
+      "model_name": "arbol",
+      "feature_set": "completo",
+      "task": "multiclase",
+      "n_features": 34,
+      "n_train": 3539,
+      "best_params": {
+        "classifier__max_depth": 5,
+        "classifier__min_samples_leaf": 1
+      },
+      "cv": {
+        "f1_macro_mean": 0.6701076476770061,
+        "f1_macro_std": 0.01583221211658575,
+        "recall_dropout_mean": 0.6763080609011516
+      },
+      "test": {
+        "accuracy": 0.672316384180791,
+        "balanced_accuracy": 0.6636681792377342,
+        "f1_macro": 0.6462361032356676,
+        "recall_dropout": 0.5985915492957746,
+        "precision_dropout": 0.8629441624365483,
+        "f1_dropout": 0.7068607068607069,
+        "roc_auc": 0.8268254514225393,
+        "brier_dropout": 0.12188789150387146,
+        "confusion_matrix": [
+          [
+            170,
+            88,
+            26
+          ],
+          [
+            21,
+            107,
+            31
+          ],
+          [
+            6,
+            118,
+            318
+          ]
+        ],
+        "classes": [
+          "Dropout",
+          "Enrolled",
+          "Graduate"
+        ],
+        "n_test": 885,
+        "classification_report": {
+          "Dropout": {
+            "precision": 0.8629441624365483,
+            "recall": 0.5985915492957746,
+            "f1-score": 0.7068607068607069,
+            "support": 284.0
+          },
+          "Enrolled": {
+            "precision": 0.34185303514376997,
+            "recall": 0.6729559748427673,
+            "f1-score": 0.4533898305084746,
+            "support": 159.0
+          },
+          "Graduate": {
+            "precision": 0.848,
+            "recall": 0.7194570135746606,
+            "f1-score": 0.7784577723378213,
+            "support": 442.0
+          },
+          "accuracy": 0.672316384180791,
+          "macro avg": {
+            "precision": 0.6842657325267728,
+            "recall": 0.6636681792377342,
+            "f1-score": 0.6462361032356676,
+            "support": 885.0
+          },
+          "weighted avg": {
+            "precision": 0.7618607623952984,
+            "recall": 0.672316384180791,
+            "f1-score": 0.6970799538673506,
+            "support": 885.0
+          }
+        }
+      }
+    },
+    {
+      "id": "EXP_08",
+      "model_name": "arbol",
+      "feature_set": "completo",
+      "task": "binaria",
+      "n_features": 34,
+      "n_train": 3539,
+      "best_params": {
+        "classifier__max_depth": 5,
+        "classifier__min_samples_leaf": 10
+      },
+      "cv": {
+        "f1_macro_mean": 0.8252384874351388,
+        "f1_macro_std": 0.019843695345671635,
+        "recall_dropout_mean": 0.761701058814437
+      },
+      "test": {
+        "accuracy": 0.8429378531073446,
+        "balanced_accuracy": 0.8239993203815237,
+        "f1_macro": 0.8212928971862148,
+        "recall_dropout": 0.7711267605633803,
+        "precision_dropout": 0.7474402730375427,
+        "f1_dropout": 0.7590987868284229,
+        "roc_auc": 0.8897582667385344,
+        "brier_dropout": 0.11814896002403455,
+        "confusion_matrix": [
+          [
+            219,
+            65
+          ],
+          [
+            74,
+            527
+          ]
+        ],
+        "classes": [
+          "Dropout",
+          "No_Dropout"
+        ],
+        "n_test": 885,
+        "classification_report": {
+          "Dropout": {
+            "precision": 0.7474402730375427,
+            "recall": 0.7711267605633803,
+            "f1-score": 0.7590987868284229,
+            "support": 284.0
+          },
+          "No_Dropout": {
+            "precision": 0.8902027027027027,
+            "recall": 0.8768718801996672,
+            "f1-score": 0.8834870075440067,
+            "support": 601.0
+          },
+          "accuracy": 0.8429378531073446,
+          "macro avg": {
+            "precision": 0.8188214878701228,
+            "recall": 0.8239993203815237,
+            "f1-score": 0.8212928971862148,
+            "support": 885.0
+          },
+          "weighted avg": {
+            "precision": 0.8443896744259735,
+            "recall": 0.8429378531073446,
+            "f1-score": 0.8435703355855594,
+            "support": 885.0
+          }
+        }
+      }
+    }
+  ],
+  "selected": {
+    "multiclase": "EXP_01",
+    "binaria": "EXP_02"
+  },
+  "recommended_config": {
+    "modelo": "logreg",
+    "conjunto": "temprano",
+    "tarea": "binaria"
+  },
+  "interpretation": {
+    "logreg": "EXP_02",
+    "arbol": "EXP_06",
+    "completo": {
+      "logreg": "EXP_04",
+      "arbol": "EXP_08"
+    },
+    "resumen": {
+      "EXP_02": {
+        "principal": "VAR_23 · Unidades aprobadas, primer semestre (estandarizada)",
+        "peso_principal": 2.347585336599456,
+        "proporcion_principal": 0.030201774614819463,
+        "soporte_categorias_top": [
+          {
+            "variable": "VAR_10",
+            "etiqueta": "VAR_10 · Ocupación materna = 29",
+            "codigo": 29.0,
+            "n_train_codigo": 19
+          },
+          {
+            "variable": "VAR_04",
+            "etiqueta": "VAR_04 · Carrera cursada = 16",
+            "codigo": 16.0,
+            "n_train_codigo": 144
+          },
+          {
+            "variable": "VAR_02",
+            "etiqueta": "VAR_02 · Modalidad de acceso = 6",
+            "codigo": 6.0,
+            "n_train_codigo": 21
+          },
+          {
+            "variable": "VAR_11",
+            "etiqueta": "VAR_11 · Ocupación paterna = 12",
+            "codigo": 12.0,
+            "n_train_codigo": 54
+          },
+          {
+            "variable": "VAR_10",
+            "etiqueta": "VAR_10 · Ocupación materna = 1",
+            "codigo": 1.0,
+            "n_train_codigo": 120
+          },
+          {
+            "variable": "VAR_08",
+            "etiqueta": "VAR_08 · Escolaridad materna = 4",
+            "codigo": 4.0,
+            "n_train_codigo": 37
+          },
+          {
+            "variable": "VAR_09",
+            "etiqueta": "VAR_09 · Escolaridad paterna = 16",
+            "codigo": 16.0,
+            "n_train_codigo": 2
+          },
+          {
+            "variable": "VAR_06",
+            "etiqueta": "VAR_06 · Titulación previa = 2",
+            "codigo": 2.0,
+            "n_train_codigo": 21
+          },
+          {
+            "variable": "VAR_04",
+            "etiqueta": "VAR_04 · Carrera cursada = 2",
+            "codigo": 2.0,
+            "n_train_codigo": 179
+          },
+          {
+            "variable": "VAR_08",
+            "etiqueta": "VAR_08 · Escolaridad materna = 19",
+            "codigo": 19.0,
+            "n_train_codigo": 110
+          },
+          {
+            "variable": "VAR_10",
+            "etiqueta": "VAR_10 · Ocupación materna = 9",
+            "codigo": 9.0,
+            "n_train_codigo": 24
+          },
+          {
+            "variable": "VAR_04",
+            "etiqueta": "VAR_04 · Carrera cursada = 8",
+            "codigo": 8.0,
+            "n_train_codigo": 116
+          },
+          {
+            "variable": "VAR_11",
+            "etiqueta": "VAR_11 · Ocupación paterna = 35",
+            "codigo": 35.0,
+            "n_train_codigo": 4
+          }
+        ]
+      },
+      "EXP_06": {
+        "principal": "VAR_23 · Unidades aprobadas, primer semestre (estandarizada)",
+        "peso_principal": 0.7076805966543133,
+        "proporcion_principal": 0.7076805966543133
+      },
+      "EXP_04": {
+        "principal": "VAR_29 · Unidades aprobadas, segundo semestre (estandarizada)",
+        "peso_principal": 1.9770808715979096,
+        "proporcion_principal": 0.026466324777877148
+      },
+      "EXP_08": {
+        "principal": "VAR_29 · Unidades aprobadas, segundo semestre (estandarizada)",
+        "peso_principal": 0.7198329122636007,
+        "proporcion_principal": 0.7198329122636007
+      }
+    }
+  }
+}

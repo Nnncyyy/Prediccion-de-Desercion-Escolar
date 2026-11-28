@@ -1,0 +1,133 @@
+{
+  "columns": [
+    "Marital status",
+    "Application mode",
+    "Application order",
+    "Course",
+    "Daytime/evening attendance",
+    "Previous qualification",
+    "Nacionality",
+    "Mother's qualification",
+    "Father's qualification",
+    "Mother's occupation",
+    "Father's occupation",
+    "Displaced",
+    "Educational special needs",
+    "Debtor",
+    "Tuition fees up to date",
+    "Gender",
+    "Scholarship holder",
+    "Age at enrollment",
+    "International",
+    "Curricular units 1st sem (credited)",
+    "Curricular units 1st sem (enrolled)",
+    "Curricular units 1st sem (evaluations)",
+    "Curricular units 1st sem (approved)",
+    "Curricular units 1st sem (grade)",
+    "Curricular units 1st sem (without evaluations)",
+    "Unemployment rate",
+    "Inflation rate",
+    "GDP"
+  ],
+  "model_name": "logreg",
+  "version": "1.0.0",
+  "task": "binaria",
+  "feature_set": "temprano",
+  "classes": [
+    "Dropout",
+    "No_Dropout"
+  ],
+  "metrics": {
+    "accuracy": 0.8451977401129943,
+    "balanced_accuracy": 0.8265918305172131,
+    "f1_macro": 0.8238642224065571,
+    "recall_dropout": 0.7746478873239436,
+    "precision_dropout": 0.7508532423208191,
+    "f1_dropout": 0.7625649913344887,
+    "roc_auc": 0.9092592158608891,
+    "brier_dropout": 0.10955127387938715,
+    "confusion_matrix": [
+      [
+        220,
+        64
+      ],
+      [
+        73,
+        528
+      ]
+    ],
+    "classes": [
+      "Dropout",
+      "No_Dropout"
+    ],
+    "n_test": 885,
+    "classification_report": {
+      "Dropout": {
+        "precision": 0.7508532423208191,
+        "recall": 0.7746478873239436,
+        "f1-score": 0.7625649913344887,
+        "support": 284.0
+      },
+      "No_Dropout": {
+        "precision": 0.8918918918918919,
+        "recall": 0.8785357737104825,
+        "f1-score": 0.8851634534786254,
+        "support": 601.0
+      },
+      "accuracy": 0.8451977401129943,
+      "macro avg": {
+        "precision": 0.8213725671063554,
+        "recall": 0.8265918305172131,
+        "f1-score": 0.8238642224065571,
+        "support": 885.0
+      },
+      "weighted avg": {
+        "precision": 0.8466320314645644,
+        "recall": 0.8451977401129943,
+        "f1-score": 0.8458211221238968,
+        "support": 885.0
+      }
+    }
+  },
+  "trained_at": "2026-11-03T03:06:23.769019+00:00",
+  "dataset_sha256": "6bcfb6b3c826c4b8b9c7a99c063762748f6f462e24aabd26719ec2e55fed6135",
+  "dataset_path": "ml/data/dataset.csv",
+  "sklearn_version": "1.9.1",
+  "pandas_version": "2.3.3",
+  "seed": 42,
+  "best_params": {
+    "classifier__C": 1
+  },
+  "cv": {
+    "f1_macro_mean": 0.829781245402225,
+    "f1_macro_std": 0.009661227900224516,
+    "recall_dropout_mean": 0.8003361929051704
+  },
+  "training_data": {
+    "procedencia": "UCI / Instituto Politécnico de Portalegre, Portugal; 2008–2019",
+    "filas_csv": 4424,
+    "columnas_csv": 35,
+    "variables_utilizadas": 28,
+    "filas_train": 3539,
+    "filas_test": 885,
+    "clases_train": {
+      "No_Dropout": 2402,
+      "Dropout": 1137
+    },
+    "clases_test": {
+      "No_Dropout": 601,
+      "Dropout": 284
+    },
+    "particion": "80/20 estratificada por objetivo; el estimador guardado se ajusta solo en train"
+  },
+  "id": "ML_02",
+  "uso_previsto": "Apoyo experimental a tutorías mediante probabilidad de deserción observada; requiere validación local antes de uso operativo y revisión humana.",
+  "horizonte": "Cierre del primer semestre",
+  "limitaciones": "Datos del Instituto Politécnico de Portalegre, Portugal, de 2008–2019; no representan ESCOM. No hay horas de trabajo ni calificaciones por materia. El segundo semestre implica predicción tardía. Enrolled indica continuidad de estudios al observar el objetivo, no riesgo intermedio; No_Dropout tampoco garantiza graduación futura. Gender y Nacionality son variables sensibles: su inclusión puede reproducir sesgos y requiere evaluación por subgrupos y validación local antes de uso real. Estas probabilidades no son un diagnóstico ni justifican decisiones punitivas. Los estados de beca, deuda y colegiatura se agrupan con inscripción según el diseño solicitado, pero el CSV no incluye sus fechas de captura: debe verificarse su disponibilidad histórica.",
+  "calibracion": "Se reporta Brier sin reajuste de calibración; los pesos balanceados pueden afectar probabilidades.",
+  "criterio_seleccion": "F1-macro en CV estratificada solo sobre train; configuración según ML_00 y ML_02.",
+  "variables_sensibles": [
+    "Gender",
+    "Nacionality"
+  ]
+}
